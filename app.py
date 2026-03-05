@@ -303,7 +303,7 @@ def render_results(results, latency):
         with cols[i % len(cols)]:
             # Product image
             if os.path.exists(res["image_path"]):
-                st.image(img, width="stretch")
+                st.image(res["image_path"], use_container_width=True)
             else:
                 st.info("Image not available")
 
@@ -355,7 +355,7 @@ else:
                 query_img = Image.open(uploaded).convert("RGB")
                 col_preview, col_results = st.columns([1, 3])
                 with col_preview:
-                    st.image(query_img, caption="Your query", width="stretch")
+                    st.image(query_img, caption="Your query", use_container_width=True)
                 with col_results:
                     with st.spinner("🔍 Searching …"):
                         results, latency = engine.search_by_image(
