@@ -14,7 +14,7 @@ tqdm
 scikit-learn
 
 # App
-streamlit
+streamlit==1.37.0
 
 # Storage & Deployment
 huggingface_hub
