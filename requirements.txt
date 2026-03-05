@@ -20,6 +20,7 @@ streamlit
 huggingface_hub
 python-dotenv
 boto3
+altair==4.2.2
 
 # Visualization (for notebooks)
 matplotlib
