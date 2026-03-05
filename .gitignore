@@ -1,0 +1,33 @@
+# Data files (too large for Git)
+data/images/
+data/*.csv
+embeddings/
+data/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+.streamlit/secrets.toml

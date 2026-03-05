@@ -1,0 +1,26 @@
+# Core ML
+torch
+torchvision
+open-clip-torch
+faiss-cpu
+
+# Data & Image Processing
+numpy
+pandas
+Pillow
+tqdm
+
+# Evaluation
+scikit-learn
+
+# App
+streamlit
+
+# Storage & Deployment
+huggingface_hub
+python-dotenv
+boto3
+
+# Visualization (for notebooks)
+matplotlib
+seaborn
