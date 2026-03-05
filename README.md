@@ -154,6 +154,7 @@ product-image-search/
 - **Scalability:** Can upgrade to IVF-PQ for millions of products
 
 ---
+<img width="2510" height="1207" alt="image" src="https://github.com/user-attachments/assets/de9f2985-c2b3-4aa4-bec4-29421ac01ee3" />
 
 ## 📝 License
 
