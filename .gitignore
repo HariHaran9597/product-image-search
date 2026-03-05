@@ -1,8 +1,8 @@
 # Data files (too large for Git)
 data/images/
-data/*.csv
+data/*
+!data/styles_clean.csv
 embeddings/
-data/
 # Python
 __pycache__/
 *.pyc
