@@ -9,9 +9,9 @@
 
 > An end-to-end, production-ready visual search engine for e-commerce. It uses OpenAI's **CLIP** model and **FAISS** vector search to enable blazing-fast image-to-image and text-to-image product discovery across a 44,000+ item catalog in **under 50ms**.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](YOUR_STREAMLIT_APP_LINK_HERE)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://visual-search-enginee.streamlit.app/)
 
-*Add a demo GIF here showing the UI, image upload, text search, and Similar Product chaining.*
+Live demo: https://visual-search-enginee.streamlit.app/
 
 ---
 
@@ -95,7 +95,7 @@ I benchmarked CLIP (ViT-B/32) against a standard **ResNet50** baseline to prove 
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/product-image-search.git
+git clone https://github.com/HariHaran9597/product-image-search.git
 cd product-image-search
 ```
 
