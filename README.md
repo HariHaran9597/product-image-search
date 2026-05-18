@@ -65,7 +65,13 @@ graph TD
 
 ---
 
-## 📊 Scientific Evaluation
+## Evaluation
+
+- Dataset: Fashion Product Images Small, Kaggle
+- Catalog size: 44,419 images
+- CLIP Recall@5: 91.8%
+- ResNet50 Recall@5: 60.1%
+- Script: `python src/evaluate.py`
 
 I benchmarked CLIP (ViT-B/32) against a standard **ResNet50** baseline to prove the semantic strength of a joint image-text model framework for same-category product retrieval. *(Evaluated over 5,000 products with 200 random queries).*
 
@@ -104,21 +110,22 @@ cd product-image-search
 pip install -r requirements.txt
 ```
 
-3. **Configure AWS Secrets:**
-Create a `.streamlit/secrets.toml` file in the root directory to authorize artifact pulling:
-```toml
-[AWS]
-AWS_ACCESS_KEY_ID = "Your_AWS_Access_Key"
-AWS_SECRET_ACCESS_KEY = "Your_AWS_Secret_Key"
-AWS_REGION = "ap-south-1"
-S3_BUCKET_NAME = "your-s3-bucket-name"
-```
+3. **Artifact Source (Embeddings & FAISS Index):**
+The search engine requires a pre-built FAISS index and image embeddings to function. These artifacts (approx 90MB) are too large for standard GitHub repositories.
+
+When you run the application, it will attempt to load the models in this order:
+- **Local Files:** It will look in the `/embeddings/` directory.
+- **Public URL (Default):** If not found locally, it will attempt to download them from a public source (e.g., GitHub Releases or Hugging Face dataset).
+- **Private S3 Fallback:** If the public download fails, it will look for optional AWS credentials to fetch them from an S3 bucket.
+
+To use the private S3 fallback, copy `.streamlit/secrets.example.toml` to `.streamlit/secrets.toml` and fill in your AWS details.
 
 4. **Launch the application:**
 ```bash
 python -m streamlit run app.py
 ```
-*Note: Due to the `boto3` logic embedded in `app.py`, the application will seamlessly download the required `faiss_index.bin` and `.npy` files from S3 if they are missing locally within the `/embeddings/` directory.*
+
+*Note: The live demo relies on the configured public artifact source to start properly. If the artifacts are missing and download fails, the app will display a graceful error message instead of crashing.*
 
 ---
 
