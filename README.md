@@ -22,7 +22,7 @@ Live demo: https://visual-search-enginee.streamlit.app/
 | **Cross-Modal Search** | Unified 512-dimensional embedding space powers both visual (image upload) and natural language text-to-image queries based on *open-clip-torch* (ViT-B/32). |
 | **Maximal Marginal Relevance** | Enforces result diversity using MMR. Balances retrieval relevance against vector similarity redundancy to prevent showing identical items. |
 | **Chained Discovery** | "Find Similar" loop allows users to use returned embeddings as new queries, dynamically recalculating nearest neighbors. |
-| **AWS Cloud Artifact Streaming** | Bypasses GitHub's 100MB limits by securely streaming the 90MB FAISS index and `.npy` embeddings directly from an Amazon S3 bucket into Streamlit's RAM using `boto3` and IAM Least Privilege policies. |
+| **Artifact Loading** | Loads the 90MB FAISS index and `.npy` embeddings from local files or public release assets, with optional private S3 fallback for custom deployments. |
 | **Microsecond Vector Retrieval** | `faiss-cpu` IndexFlatIP handles exact nearest-neighbor search with L2-normalization for cosine similarity across 44,419 items. |
 | **Post-Filtering Pipeline** | Sub-millisecond metadata lookups for filtering (Gender, Category) applied directly over the FAISS results payload. |
 
@@ -39,7 +39,7 @@ graph TD
     subgraph Offline Batch Processing
     E[44K+ Product Images] --> F[Google Colab T4 GPU]
     F --> G[Generate 512-dim Embeddings]
-    G --> H[AWS S3 Storage Bucket]
+    G --> H[Public Artifact Store]
     end
     
     C --> I[512-D L2-Normalized Vector]
@@ -60,7 +60,7 @@ graph TD
 ### The 3-Phase Pipeline
 
 1. **Encode (Offline):** 44,419 product images from the Kaggle Fashion dataset are mapped to 512-dimensional arrays using CLIP ViT-B/32. Accelerated via a Google Colab T4 GPU (under 3 mins).
-2. **Index (Cloud Storage):** Embeddings are L2-normalized to enable Inner Product FAISS indexing (mathematically equivalent to Cosine Similarity for speed). These binary `.bin` and `.npy` artifacts are deployed to an S3 bucket.
+2. **Index (Artifact Storage):** Embeddings are L2-normalized to enable Inner Product FAISS indexing (mathematically equivalent to Cosine Similarity for speed). These binary `.bin` and `.npy` artifacts are stored as public release assets or object-storage artifacts.
 3. **Query (Online/Real-time):** The application fetches models into memory on startup. Input queries are encoded, searched through FAISS, re-ranked via MMR for diversity, and filtered against metadata in milliseconds.
 
 ---
@@ -90,7 +90,7 @@ I benchmarked CLIP (ViT-B/32) against a standard **ResNet50** baseline to prove 
 
 *   **Deep Learning:** PyTorch, `open-clip-torch` (OpenAI CLIP)
 *   **Vector Search:** Facebook AI Similarity Search (`faiss-cpu`)
-*   **Cloud Architecture:** AWS S3, IAM Roles, `boto3`
+*   **Artifact Loading:** GitHub Releases/public object storage, optional AWS S3 fallback, `boto3`
 *   **Frontend Presentation:** Streamlit, Custom CSS
 *   **Data & Matrix Ops:** NumPy, Pandas, Pillow
 *   **Dataset:** [Fashion Product Images (Small)](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small) — Kaggle (44K images)
